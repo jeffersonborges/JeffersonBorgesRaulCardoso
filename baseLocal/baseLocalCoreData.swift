@@ -14,6 +14,6 @@ extension UIViewController {
         return UIApplication.shared.delegate as! AppDelegate
     }
     var context: NSManagedObjectContext {
-        //return appDelegate.persistentContainer.viewContext
+        return appDelegate.persistentContainer.viewContext
     }
 }

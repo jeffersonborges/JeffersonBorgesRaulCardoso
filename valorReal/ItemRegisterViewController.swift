@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ItemRegisterViewController: UIViewController {
 
@@ -16,20 +17,40 @@ class ItemRegisterViewController: UIViewController {
     @IBOutlet weak var valorProduto: UITextField!
     @IBOutlet weak var swCartao: UISwitch!
     
+    let formatter = NumberFormatter()
+    
     // MARK: - Properties
-    //var movie: Movie!
     var smallImage: UIImage!
+    var produto: Produto!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func addEditProduto(_ sender: UIButton) {
+        if produto == nil{
+            produto = Produto(context: context)
+        }
+        produto.nome = nomeProduto.text
+        produto.image = smallImage
+        if let valor = formatter.number(from: valorProduto.text!)?.doubleValue{
+            produto.valor = valor
+        }
+        produto.cartao = swCartao.isOn
+        do{
+            try context.save()
+        }catch{
+            print(error.localizedDescription)
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func addImageProduto(_ sender: Any) {

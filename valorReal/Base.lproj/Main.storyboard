@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RhX-Pe-Uc9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RhX-Pe-Uc9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -64,6 +65,9 @@
                                 <state key="normal" title="CADASTRAR">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addEditProduto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fUa-rJ-O5Y"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwE-bo-dTE">
                                 <rect key="frame" x="106" y="145" width="169" height="146"/>
@@ -159,18 +163,56 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ogF-kW-aXk">
-                            <rect key="frame" x="0.0" y="72" width="375" height="10"/>
+                            <rect key="frame" x="0.0" y="146" width="375" height="10"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Chb-oc-SzJ">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="118" id="Chb-oc-SzJ" customClass="ProdutoTableViewCell" customModule="valorReal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="118"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Chb-oc-SzJ" id="6To-5a-h37">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="reuseIdentifier" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Chb-oc-SzJ" id="6To-5a-h37">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="117.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="780-O2-OVN">
+                                            <rect key="frame" x="8" y="8" width="90" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="UDU-JL-UcN"/>
+                                                <constraint firstAttribute="width" constant="90" id="bHQ-n8-Vxb"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6RF-aQ-ozH">
+                                            <rect key="frame" x="106" y="8" width="46" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="oBC-qh-ac9"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Valor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhd-DW-UX1">
+                                            <rect key="frame" x="106" y="40" width="39" height="47"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Dhd-DW-UX1" firstAttribute="top" secondItem="6RF-aQ-ozH" secondAttribute="bottom" constant="12" id="1YE-kZ-CW1"/>
+                                        <constraint firstItem="780-O2-OVN" firstAttribute="leading" secondItem="6To-5a-h37" secondAttribute="leading" constant="8" id="I6a-k5-TC3"/>
+                                        <constraint firstItem="Dhd-DW-UX1" firstAttribute="leading" secondItem="6RF-aQ-ozH" secondAttribute="leading" id="K9K-WE-iPf"/>
+                                        <constraint firstItem="6RF-aQ-ozH" firstAttribute="top" secondItem="780-O2-OVN" secondAttribute="top" id="U5Y-h6-zMC"/>
+                                        <constraint firstItem="6RF-aQ-ozH" firstAttribute="leading" secondItem="780-O2-OVN" secondAttribute="trailing" constant="8" id="eG9-81-s4R"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Dhd-DW-UX1" secondAttribute="bottom" constant="20" id="qSA-8c-BZz"/>
+                                        <constraint firstItem="780-O2-OVN" firstAttribute="top" secondItem="6To-5a-h37" secondAttribute="top" constant="8" id="sVB-xe-zQb"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imgProduto" destination="780-O2-OVN" id="S5a-P0-iMF"/>
+                                    <outlet property="lbNome" destination="6RF-aQ-ozH" id="naJ-3A-UdR"/>
+                                    <outlet property="lbValor" destination="Dhd-DW-UX1" id="jPL-3B-Wju"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -250,6 +292,6 @@
         <image name="Unknown" width="225" height="225"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="69r-0M-fCt"/>
+        <segue reference="mHx-FN-YFt"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -16,6 +16,7 @@
 		AC074AFB208EA846003E0CA7 /* ProdutosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC074AFA208EA846003E0CA7 /* ProdutosTableViewController.swift */; };
 		AC074AFE208EB2E8003E0CA7 /* baseLocalCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC074AFD208EB2E8003E0CA7 /* baseLocalCoreData.swift */; };
 		AC074B01208EB38D003E0CA7 /* AppDelegate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC074AFF208EB38D003E0CA7 /* AppDelegate.xcdatamodeld */; };
+		EB418CAA209A310D007A88FB /* ProdutoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB418CA9209A310D007A88FB /* ProdutoTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		AC074AFA208EA846003E0CA7 /* ProdutosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdutosTableViewController.swift; sourceTree = "<group>"; };
 		AC074AFD208EB2E8003E0CA7 /* baseLocalCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = baseLocalCoreData.swift; sourceTree = "<group>"; };
 		AC074B00208EB38D003E0CA7 /* AppDelegate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppDelegate.xcdatamodel; sourceTree = "<group>"; };
+		EB418CA9209A310D007A88FB /* ProdutoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdutoTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				AC074AE6208E9481003E0CA7 /* AppDelegate.swift */,
 				AC074AE8208E9481003E0CA7 /* ViewController.swift */,
 				AC074AEA208E9481003E0CA7 /* Main.storyboard */,
+				EB418CA9209A310D007A88FB /* ProdutoTableViewCell.swift */,
 				AC074AFA208EA846003E0CA7 /* ProdutosTableViewController.swift */,
 				AC074AED208E9481003E0CA7 /* Assets.xcassets */,
 				AC074AEF208E9481003E0CA7 /* LaunchScreen.storyboard */,
@@ -111,7 +114,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Usuário Convidado";
 				TargetAttributes = {
 					AC074AE2208E9481003E0CA7 = {
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB418CAA209A310D007A88FB /* ProdutoTableViewCell.swift in Sources */,
 				AC074AE9208E9481003E0CA7 /* ViewController.swift in Sources */,
 				AC074AFB208EA846003E0CA7 /* ProdutosTableViewController.swift in Sources */,
 				AC074B01208EB38D003E0CA7 /* AppDelegate.xcdatamodeld in Sources */,
@@ -201,6 +205,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -208,6 +213,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -258,6 +264,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -265,6 +272,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
