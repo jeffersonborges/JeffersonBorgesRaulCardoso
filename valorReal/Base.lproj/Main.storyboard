@@ -85,6 +85,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="btnEdtSave" destination="Kg5-3N-Ba9" id="OvT-uK-vj6"/>
                         <outlet property="imgProduto" destination="AhC-UT-m4O" id="dVu-wY-V7n"/>
                         <outlet property="nomeProduto" destination="sAE-lh-AKd" id="n0m-nA-sTW"/>
                         <outlet property="swCartao" destination="Zxt-NU-Hy7" id="RPD-oP-QMs"/>
@@ -99,7 +100,7 @@
         <!--Item-->
         <scene sceneID="kRT-zC-72Y">
             <objects>
-                <viewController id="LC5-CG-nFr" sceneMemberID="viewController">
+                <viewController id="LC5-CG-nFr" customClass="EstadoViewController" customModule="valorReal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tfa-PD-Mth">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,16 +144,69 @@
                                 <rect key="frame" x="244" y="570" width="115" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Adicionar estado"/>
+                                <connections>
+                                    <action selector="btAddEditEstado:" destination="LC5-CG-nFr" eventType="touchUpInside" id="Zcv-Z2-MPr"/>
+                                </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FBc-I6-dR2">
+                                <rect key="frame" x="16" y="245" width="343" height="306"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="ZUf-hk-gbJ">
+                                    <rect key="frame" x="0.0" y="85" width="343" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="estadocell" textLabel="7I3-45-1dg" detailTextLabel="lrN-0o-8wJ" rowHeight="57" style="IBUITableViewCellStyleValue1" id="Gfi-QE-m5Z" customClass="EstadoTableViewCell" customModule="valorReal" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="57"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gfi-QE-m5Z" id="oJv-fA-lM8">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="56.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7I3-45-1dg">
+                                                    <rect key="frame" x="15" y="18" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lrN-0o-8wJ">
+                                                    <rect key="frame" x="284" y="18" width="44" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lbImposto" destination="lrN-0o-8wJ" id="6eu-UX-qul"/>
+                                            <outlet property="lbtitle" destination="7I3-45-1dg" id="17C-XW-K1f"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="LC5-CG-nFr" id="ZP6-9Y-nMR"/>
+                                    <outlet property="delegate" destination="LC5-CG-nFr" id="NjB-eE-k6S"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="6WM-Le-2Bu"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="Ivp-1E-HfM"/>
+                    <connections>
+                        <outlet property="btnAddEstado" destination="FBE-EK-AwL" id="IEX-VL-gbQ"/>
+                        <outlet property="tfCotacao" destination="vJN-fX-Zou" id="uHe-HM-3XJ"/>
+                        <outlet property="tf_iof" destination="cgp-j7-hf7" id="PzU-Vd-KYE"/>
+                        <outlet property="tvEstados" destination="FBc-I6-dR2" id="Mha-P1-Wrd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRN-HU-chw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="-115"/>
+            <point key="canvasLocation" x="140" y="-115.59220389805098"/>
         </scene>
         <!--lista de compras-->
         <scene sceneID="7MK-iG-zN3">
@@ -212,6 +266,7 @@
                                     <outlet property="imgProduto" destination="780-O2-OVN" id="S5a-P0-iMF"/>
                                     <outlet property="lbNome" destination="6RF-aQ-ozH" id="naJ-3A-UdR"/>
                                     <outlet property="lbValor" destination="Dhd-DW-UX1" id="jPL-3B-Wju"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="sgEditProduto" id="Gq6-ZT-sWE"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -223,7 +278,7 @@
                     <navigationItem key="navigationItem" title="lista de compras" id="mVI-ag-a3E">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="uw3-4E-SKs">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="zOw-vR-6j7"/>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="sgNovoProduto" id="zOw-vR-6j7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -292,6 +347,7 @@
         <image name="Unknown" width="225" height="225"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mHx-FN-YFt"/>
+        <segue reference="69r-0M-fCt"/>
+        <segue reference="zOw-vR-6j7"/>
     </inferredMetricsTieBreakers>
 </document>

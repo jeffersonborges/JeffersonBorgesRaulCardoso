@@ -3,7 +3,7 @@
     <entity name="Estado" representedClassName="Estado" syncable="YES" codeGenerationType="class">
         <attribute name="imposto" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="produto" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Produto" inverseName="estado" inverseEntity="Produto" syncable="YES"/>
+        <relationship name="produto" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Produto" inverseName="estado" inverseEntity="Produto" syncable="YES"/>
     </entity>
     <entity name="Produto" representedClassName="Produto" syncable="YES" codeGenerationType="class">
         <attribute name="cartao" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>

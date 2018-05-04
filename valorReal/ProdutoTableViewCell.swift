@@ -13,6 +13,8 @@ class ProdutoTableViewCell: UITableViewCell {
     @IBOutlet weak var lbNome: UILabel!
     @IBOutlet weak var lbValor: UILabel!
     
+    var conf = Calcular.shared
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,12 +26,13 @@ class ProdutoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func prepare(with produto: Produto){
-        lbNome.text = produto.nome
-        lbValor.text = String(produto.valor)
-        if let image = produto.image as? UIImage{
+    func prepare(witch produto: Produto) {
+        lbNome.text = produto.nome ?? ""
+        lbValor.text = conf.getFormattedValue(of: produto.valor, withCurrency: "U$ ")
+        if let image = produto.image as? UIImage {
             imgProduto.image = image
-        }else{
+        }
+        else {
             imgProduto.image = UIImage(named: "Unknown")
         }
     }

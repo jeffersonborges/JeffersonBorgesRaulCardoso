@@ -17,6 +17,11 @@
 		AC074AFE208EB2E8003E0CA7 /* baseLocalCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC074AFD208EB2E8003E0CA7 /* baseLocalCoreData.swift */; };
 		AC074B01208EB38D003E0CA7 /* AppDelegate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC074AFF208EB38D003E0CA7 /* AppDelegate.xcdatamodeld */; };
 		EB418CAA209A310D007A88FB /* ProdutoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB418CA9209A310D007A88FB /* ProdutoTableViewCell.swift */; };
+		EB705A3E209BD1B000255631 /* EstadoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB705A3D209BD1B000255631 /* EstadoViewController.swift */; };
+		EB705A40209BD21E00255631 /* EstadoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB705A3F209BD21E00255631 /* EstadoTableViewCell.swift */; };
+		EB705A42209BD88F00255631 /* EstadoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB705A41209BD88F00255631 /* EstadoManager.swift */; };
+		EB705A44209BD95F00255631 /* Configuracao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB705A43209BD95F00255631 /* Configuracao.swift */; };
+		EB705A46209BDA0300255631 /* Calcular.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB705A45209BDA0300255631 /* Calcular.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +37,11 @@
 		AC074AFD208EB2E8003E0CA7 /* baseLocalCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = baseLocalCoreData.swift; sourceTree = "<group>"; };
 		AC074B00208EB38D003E0CA7 /* AppDelegate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppDelegate.xcdatamodel; sourceTree = "<group>"; };
 		EB418CA9209A310D007A88FB /* ProdutoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdutoTableViewCell.swift; sourceTree = "<group>"; };
+		EB705A3D209BD1B000255631 /* EstadoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstadoViewController.swift; sourceTree = "<group>"; };
+		EB705A3F209BD21E00255631 /* EstadoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstadoTableViewCell.swift; sourceTree = "<group>"; };
+		EB705A41209BD88F00255631 /* EstadoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstadoManager.swift; sourceTree = "<group>"; };
+		EB705A43209BD95F00255631 /* Configuracao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuracao.swift; sourceTree = "<group>"; };
+		EB705A45209BDA0300255631 /* Calcular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calcular.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +85,11 @@
 				AC074AF2208E9481003E0CA7 /* Info.plist */,
 				AC074AF8208EA3C2003E0CA7 /* ItemRegisterViewController.swift */,
 				AC074AFF208EB38D003E0CA7 /* AppDelegate.xcdatamodeld */,
+				EB705A3D209BD1B000255631 /* EstadoViewController.swift */,
+				EB705A3F209BD21E00255631 /* EstadoTableViewCell.swift */,
+				EB705A41209BD88F00255631 /* EstadoManager.swift */,
+				EB705A43209BD95F00255631 /* Configuracao.swift */,
+				EB705A45209BDA0300255631 /* Calcular.swift */,
 			);
 			path = valorReal;
 			sourceTree = "<group>";
@@ -162,8 +177,13 @@
 				EB418CAA209A310D007A88FB /* ProdutoTableViewCell.swift in Sources */,
 				AC074AE9208E9481003E0CA7 /* ViewController.swift in Sources */,
 				AC074AFB208EA846003E0CA7 /* ProdutosTableViewController.swift in Sources */,
+				EB705A44209BD95F00255631 /* Configuracao.swift in Sources */,
 				AC074B01208EB38D003E0CA7 /* AppDelegate.xcdatamodeld in Sources */,
+				EB705A3E209BD1B000255631 /* EstadoViewController.swift in Sources */,
+				EB705A42209BD88F00255631 /* EstadoManager.swift in Sources */,
 				AC074AF9208EA3C2003E0CA7 /* ItemRegisterViewController.swift in Sources */,
+				EB705A46209BDA0300255631 /* Calcular.swift in Sources */,
+				EB705A40209BD21E00255631 /* EstadoTableViewCell.swift in Sources */,
 				AC074AE7208E9481003E0CA7 /* AppDelegate.swift in Sources */,
 				AC074AFE208EB2E8003E0CA7 /* baseLocalCoreData.swift in Sources */,
 			);

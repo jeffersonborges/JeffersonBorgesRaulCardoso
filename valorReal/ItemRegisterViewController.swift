@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Foundation
+import CoreData
 
 class ItemRegisterViewController: UIViewController {
 
@@ -17,19 +17,98 @@ class ItemRegisterViewController: UIViewController {
     @IBOutlet weak var valorProduto: UITextField!
     @IBOutlet weak var swCartao: UISwitch!
     
+    var fetchedResultController: NSFetchedResultsController<Estado>!
+    
     let formatter = NumberFormatter()
+    var calc = Calcular.shared
+    
+    lazy var tcEstado: UIPickerView = {
+        let tcEstado = UIPickerView()
+        tcEstado.delegate = self
+        tcEstado.dataSource = self
+        return tcEstado
+    }()
     
     // MARK: - Properties
     var smallImage: UIImage!
     var produto: Produto!
     
+    @IBOutlet weak var btnEdtSave: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
+        let btCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let btDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let btEspaco = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.items = [btCancel,btEspaco,btDone]
+        
+        ufProduto.inputView = tcEstado
+        ufProduto.inputAccessoryView = toolbar
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadEstados()
+        
+        if produto != nil {
+            btnEdtSave.setTitle("ALTERAR", for: .normal)
+            nomeProduto.text = produto.nome
+            if smallImage == nil {
+                if let image = produto.image as? UIImage {
+                    imgProduto.image = image
+                    self.smallImage = image
+                }
+                else
+                {
+                    imgProduto.image = UIImage(named: "Unknown")
+                }
+            }
+            
+            swCartao.setOn(produto.cartao, animated: true)
+            ufProduto.text = produto.estado?.nome
+            valorProduto.text = calc.getFormattedValue(of: produto.valor, withCurrency: "")
+        }
+        else
+        {
+            btnEdtSave.setTitle("CADASTRAR", for: .normal)
+        }
+        
+    }
+    
+    func loadEstados() {
+        let fetchRequest: NSFetchRequest<Estado> = Estado.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "nome", ascending: true)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        
+        fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        do {
+            try    fetchedResultController.performFetch()
+        } catch  {
+            print(error.localizedDescription)
+        }
+        
+        
+    }
+    
+    @objc func cancel() {
+        ufProduto.resignFirstResponder()
+    }
+    
+    @objc func done() {
+        
+        if tcEstado.numberOfRows(inComponent: 0) > 0 {
+            let estadoSelecionado = fetchedResultController.fetchedObjects![tcEstado.selectedRow(inComponent: 0)]
+            ufProduto.text = estadoSelecionado.nome
+        }
+        cancel()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -40,11 +119,13 @@ class ItemRegisterViewController: UIViewController {
             produto = Produto(context: context)
         }
         produto.nome = nomeProduto.text
-        produto.image = smallImage
+        produto.image = imgProduto.image
         if let valor = formatter.number(from: valorProduto.text!)?.doubleValue{
             produto.valor = valor
         }
         produto.cartao = swCartao.isOn
+        let estado = fetchedResultController.fetchedObjects?.filter({$0.nome == ufProduto.text}).first
+        produto.estado = estado
         do{
             try context.save()
         }catch{
@@ -109,24 +190,41 @@ class ItemRegisterViewController: UIViewController {
 
 }
 
-// MARK: - UIImagePickerControllerDelegate
-extension ItemRegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ItemRegisterViewController: UIPickerViewDelegate,  UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
-    //O método abaixo nos trará a imagem selecionada pelo usuário em seu tamanho original
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String: AnyObject]?) {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return (fetchedResultController.fetchedObjects?.count)!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let estado = fetchedResultController.fetchedObjects?[row].nome
+        return estado
+    }
+    
+}
+
+extension ItemRegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        //Iremos usar o código abaixo para criar uma versão reduzida da imagem escolhida pelo usuário
-        let smallSize = CGSize(width: 300, height: 280)
-        UIGraphicsBeginImageContext(smallSize)
-        image.draw(in: CGRect(x: 0, y: 0, width: smallSize.width, height: smallSize.height))
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            print("erro")
+            return
+        }
         
-        //Atribuímos a versão reduzida da imagem à variável smallImage
-        smallImage = UIGraphicsGetImageFromCurrentImageContext()
+        let size = CGSize(width: image.size.width*0.2, height: image.size.height*0.2)
+        //let size = CGSize(width: 350, height:150)
+        UIGraphicsBeginImageContext(size)
+        image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        self.smallImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        imgProduto.image = smallImage //Atribuindo a imagem à ivPoster
+        imgProduto.image = self.smallImage
         
-        //Aqui efetuamos o dismiss na UIImagePickerController, para retornar à tela anterior
+        
         dismiss(animated: true, completion: nil)
+        
     }
 }

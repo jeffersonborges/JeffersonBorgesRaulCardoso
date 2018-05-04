@@ -32,6 +32,15 @@ class ProdutosTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier! == "sgEditProduto" {
+            let vc = segue.destination as! ItemRegisterViewController
+            if let prods = fetchedResultController.fetchedObjects {
+                vc.produto = prods[tableView.indexPathForSelectedRow!.row]
+            }
+        }
+    }
+    
     func loadProdutos(){
         let fetchRequest: NSFetchRequest<Produto> = Produto.fetchRequest()
         let sortDescritor = NSSortDescriptor(key: "nome", ascending: true)
@@ -71,7 +80,7 @@ class ProdutosTableViewController: UITableViewController {
 
         guard let produto = fetchedResultController.fetchedObjects?[indexPath.row] else { return cell }
         
-        cell.prepare(with: produto)
+        cell.prepare(witch: produto)
         
         // Configure the cell...
 
@@ -87,17 +96,21 @@ class ProdutosTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            
+            guard let produto = fetchedResultController.fetchedObjects?[indexPath.row] else {return}
+            do {
+                context.delete(produto)
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -130,7 +143,9 @@ extension ProdutosTableViewController: NSFetchedResultsControllerDelegate{
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
             case .delete:
-            break
+                if let indexPath = indexPath {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
             default:
                 tableView.reloadData()
         }
