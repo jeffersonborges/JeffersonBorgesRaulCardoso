@@ -11,27 +11,27 @@ import CoreData
 
 class ItemRegisterViewController: UIViewController {
 
-    @IBOutlet weak var nomeProduto: UITextField!
-    @IBOutlet weak var imgProduto: UIImageView!
-    @IBOutlet weak var ufProduto: UITextField!
-    @IBOutlet weak var valorProduto: UITextField!
-    @IBOutlet weak var swCartao: UISwitch!
+    @IBOutlet weak var productName: UITextField!
+    @IBOutlet weak var productImg: UIImageView!
+    @IBOutlet weak var ufProduct: UITextField!
+    @IBOutlet weak var valueProduct: UITextField!
+    @IBOutlet weak var swCard: UISwitch!
     
-    var fetchedResultController: NSFetchedResultsController<Estado>!
+    var fetchedResultController: NSFetchedResultsController<State>!
     
     let formatter = NumberFormatter()
     var calc = Calcular.shared
     
-    lazy var tcEstado: UIPickerView = {
-        let tcEstado = UIPickerView()
-        tcEstado.delegate = self
-        tcEstado.dataSource = self
-        return tcEstado
+    lazy var tcState: UIPickerView = {
+        let tcState = UIPickerView()
+        tcState.delegate = self
+        tcState.dataSource = self
+        return tcState
     }()
     
     // MARK: - Properties
     var smallImage: UIImage!
-    var produto: Produto!
+    var product: Product!
     
     @IBOutlet weak var btnEdtSave: UIButton!
     
@@ -45,31 +45,31 @@ class ItemRegisterViewController: UIViewController {
         
         toolbar.items = [btCancel,btEspaco,btDone]
         
-        ufProduto.inputView = tcEstado
-        ufProduto.inputAccessoryView = toolbar
+        ufProduct.inputView = tcState
+        ufProduct.inputAccessoryView = toolbar
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadEstados()
+        loadStates()
         
-        if produto != nil {
+        if product != nil {
             btnEdtSave.setTitle("ALTERAR", for: .normal)
-            nomeProduto.text = produto.nome
+            productName.text = product.name
             if smallImage == nil {
-                if let image = produto.image as? UIImage {
-                    imgProduto.image = image
+                if let image = product.image as? UIImage {
+                    productImg.image = image
                     self.smallImage = image
                 }
                 else
                 {
-                    imgProduto.image = UIImage(named: "Unknown")
+                    productImg.image = UIImage(named: "Unknown")
                 }
             }
             
-            swCartao.setOn(produto.cartao, animated: true)
-            ufProduto.text = produto.estado?.nome
-            valorProduto.text = calc.getFormattedValue(of: produto.valor, withCurrency: "")
+            swCard.setOn(product.card, animated: true)
+            ufProduct.text = product.state?.name
+            valueProduct.text = calc.getFormattedValue(of: product.value, withCurrency: "")
         }
         else
         {
@@ -78,9 +78,9 @@ class ItemRegisterViewController: UIViewController {
         
     }
     
-    func loadEstados() {
-        let fetchRequest: NSFetchRequest<Estado> = Estado.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "nome", ascending: true)
+    func loadStates() {
+        let fetchRequest: NSFetchRequest<State> = State.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -97,14 +97,14 @@ class ItemRegisterViewController: UIViewController {
     }
     
     @objc func cancel() {
-        ufProduto.resignFirstResponder()
+        ufProduct.resignFirstResponder()
     }
     
     @objc func done() {
         
-        if tcEstado.numberOfRows(inComponent: 0) > 0 {
-            let estadoSelecionado = fetchedResultController.fetchedObjects![tcEstado.selectedRow(inComponent: 0)]
-            ufProduto.text = estadoSelecionado.nome
+        if tcState.numberOfRows(inComponent: 0) > 0 {
+            let selectedState = fetchedResultController.fetchedObjects![tcState.selectedRow(inComponent: 0)]
+            ufProduct.text = selectedState.name
         }
         cancel()
     }
@@ -114,18 +114,18 @@ class ItemRegisterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func addEditProduto(_ sender: UIButton) {
-        if produto == nil{
-            produto = Produto(context: context)
+    @IBAction func addEditProduct(_ sender: UIButton) {
+        if product == nil{
+            product = Product(context: context)
         }
-        produto.nome = nomeProduto.text
-        produto.image = imgProduto.image
-        if let valor = formatter.number(from: valorProduto.text!)?.doubleValue{
-            produto.valor = valor
+        product.name = productName.text
+        product.image = productImg.image
+        if let value = formatter.number(from: valueProduct.text!)?.doubleValue{
+            product.value = value
         }
-        produto.cartao = swCartao.isOn
-        let estado = fetchedResultController.fetchedObjects?.filter({$0.nome == ufProduto.text}).first
-        produto.estado = estado
+        product.card = swCard.isOn
+        let state = fetchedResultController.fetchedObjects?.filter({$0.name == ufProduct.text}).first
+        product.state = state
         do{
             try context.save()
         }catch{
@@ -134,7 +134,7 @@ class ItemRegisterViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func addImageProduto(_ sender: Any) {
+    @IBAction func addImageProduct(_ sender: Any) {
         //Criando o alerta que será apresentado ao usuário
         let alert = UIAlertController(title: "Selecionar poster", message: "De onde você quer escolher o poster?", preferredStyle: .actionSheet)
         
@@ -200,8 +200,8 @@ extension ItemRegisterViewController: UIPickerViewDelegate,  UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let estado = fetchedResultController.fetchedObjects?[row].nome
-        return estado
+        let state = fetchedResultController.fetchedObjects?[row].name
+        return state
     }
     
 }
@@ -221,7 +221,7 @@ extension ItemRegisterViewController: UIImagePickerControllerDelegate, UINavigat
         self.smallImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        imgProduto.image = self.smallImage
+        productImg.image = self.smallImage
         
         
         dismiss(animated: true, completion: nil)

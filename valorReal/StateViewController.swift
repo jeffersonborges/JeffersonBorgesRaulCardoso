@@ -9,17 +9,17 @@
 import UIKit
 import CoreData
 
-class EstadoViewController: UIViewController {
+class StateViewController: UIViewController {
     
-    var estadoManager = EstadoManager.shared
+    var stateManager = StateManager.shared
     
-    let config = Configuracao.shared
+    let config = Configuration.shared
     var calc = Calcular.shared
 
-    @IBOutlet weak var tfCotacao: UITextField!
+    @IBOutlet weak var tfCotation: UITextField!
     @IBOutlet weak var tf_iof: UITextField!
-    @IBOutlet weak var tvEstados: UITableView!
-    @IBOutlet weak var btnAddEstado: UIButton!
+    @IBOutlet weak var tvStates: UITableView!
+    @IBOutlet weak var btnAddState: UIButton!
     
     var label = UILabel()
     
@@ -27,54 +27,52 @@ class EstadoViewController: UIViewController {
         super.viewDidLoad()
         label.text = "Lista de estados vazia."
         label.textAlignment = .center
-        loadValores()
+        loadValues()
         
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadEstados()
+        loadStates()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         //aqui grava
         if tf_iof.text?.isEmpty == false {
-            config.txIOF = calc.verificaSinal(tf_iof.text!)
-            
+            config.txIOF = calc.verificaSinal(tf_iof.text!)            
         }
         
-        if tfCotacao.text?.isEmpty == false {
-            config.cotDolar = calc.verificaSinal(tfCotacao.text!)
+        if tfCotation.text?.isEmpty == false {
+            config.cotDolar = calc.verificaSinal(tfCotation.text!)
         }
     }
     
-    func loadValores() {
+    func loadValues() {
         //aqui apresenta
-        tfCotacao.text = config.cotDolar
+        tfCotation.text = config.cotDolar
         tf_iof.text = config.txIOF
-        
-        
-    }
-    func loadEstados() {
-        estadoManager.loadEstados(with: context)
-        tvEstados.reloadData()
     }
     
-    @IBAction func btAddEditEstado(_ sender: Any) {
+    func loadStates() {
+        stateManager.loadStates(with: context)
+        tvStates.reloadData()
+    }
+    
+    @IBAction func btAddEditState(_ sender: Any) {
         showAlert(with: nil)
         
     }
     
-    func showAlert(with estado: Estado?) {
-        let title = estado == nil ? "Adicionar Estado" : "Editar Estado"
-        let btTitle = estado == nil ? "Adicionar" : "Alterar"
+    func showAlert(with state: State?) {
+        let title = state == nil ? "Adicionar Estado" : "Editar Estado"
+        let btTitle = state == nil ? "Adicionar" : "Alterar"
         
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             textField.placeholder = "Nome do Estado"
-            if let estUSA = estado?.nome {
+            if let estUSA = state?.name {
                 textField.text = estUSA
             }
         }
@@ -83,17 +81,17 @@ class EstadoViewController: UIViewController {
             txtTaxa.placeholder = "Imposto"
             txtTaxa.keyboardType = UIKeyboardType.decimalPad
             
-            if let estTaxa = estado?.imposto {
+            if let estTaxa = state?.tax {
                 txtTaxa.text = self.calc.getFormattedValue(of: estTaxa, withCurrency: "")
             }
         }
         
         alert.addAction(UIAlertAction(title: btTitle, style: .default, handler: {(action) in
             var errors: String = ""
-            let estado = estado ?? Estado(context: self.context)
+            let state = state ?? State(context: self.context)
             
             if alert.textFields?[0].text != nil && alert.textFields?[0].text?.isEmpty == false {
-                estado.nome = alert.textFields?[0].text
+                state.name = alert.textFields?[0].text
             }
             else
             {
@@ -103,7 +101,7 @@ class EstadoViewController: UIViewController {
             if alert.textFields?[1].text != nil && alert.textFields?[1].text?.isEmpty == false {
                 let vlTax: String = self.calc.verificaSinal((alert.textFields?[1].text)!)
                 //conforme consulta google existem estados com taxa 0
-                estado.imposto = self.calc.convertDouble(vlTax)
+                state.tax = self.calc.convertDouble(vlTax)
             }
             else
             {
@@ -118,7 +116,7 @@ class EstadoViewController: UIViewController {
                 do
                 {
                     try self.context.save()
-                    self.loadEstados()
+                    self.loadStates()
                 }
                 catch {
                     print()
@@ -153,20 +151,20 @@ class EstadoViewController: UIViewController {
 
 }
 
-extension EstadoViewController: UITableViewDataSource {
+extension StateViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let count = estadoManager.estados.count
+        let count = stateManager.states.count
         
-        tvEstados.backgroundView = count == 0 ? label : nil
+        tvStates.backgroundView = count == 0 ? label : nil
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tvEstados.dequeueReusableCell(withIdentifier: "estadocell", for: indexPath) as! EstadoTableViewCell
-        let estado = estadoManager.estados[indexPath.row]
-        cell.prepare(witch: estado)
+        let cell = tvStates.dequeueReusableCell(withIdentifier: "statecell", for: indexPath) as! StateTableViewCell
+        let state = stateManager.states[indexPath.row]
+        cell.prepare(witch: state)
         return cell
         
     }
@@ -174,17 +172,17 @@ extension EstadoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tf_iof.resignFirstResponder()
-        tfCotacao.resignFirstResponder()
-        tvEstados.deselectRow(at: indexPath, animated: false)
+        tfCotation.resignFirstResponder()
+        tvStates.deselectRow(at: indexPath, animated: false)
         
-        let estado = estadoManager.estados[indexPath.row]
-        showAlert(with: estado)
+        let state = stateManager.states[indexPath.row]
+        showAlert(with: state)
         
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            estadoManager.deleteEstado(index: indexPath.row, with: context)
+            stateManager.deleteState(index: indexPath.row, with: context)
             //estadoManager.estados.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

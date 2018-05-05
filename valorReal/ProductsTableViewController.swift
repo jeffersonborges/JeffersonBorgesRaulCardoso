@@ -9,10 +9,10 @@
 import UIKit
 import CoreData
 
-class ProdutosTableViewController: UITableViewController {
+class ProductsTableViewController: UITableViewController {
 
     var label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 22))
-    var fetchedResultController: NSFetchedResultsController<Produto>!
+    var fetchedResultController: NSFetchedResultsController<Product>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class ProdutosTableViewController: UITableViewController {
         label.textAlignment = .center
         label.textColor = .black
         
-        loadProdutos()
+        loadProducts()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -33,17 +33,17 @@ class ProdutosTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier! == "sgEditProduto" {
+        if segue.identifier! == "sgEditProduct" {
             let vc = segue.destination as! ItemRegisterViewController
             if let prods = fetchedResultController.fetchedObjects {
-                vc.produto = prods[tableView.indexPathForSelectedRow!.row]
+                vc.product = prods[tableView.indexPathForSelectedRow!.row]
             }
         }
     }
     
-    func loadProdutos(){
-        let fetchRequest: NSFetchRequest<Produto> = Produto.fetchRequest()
-        let sortDescritor = NSSortDescriptor(key: "nome", ascending: true)
+    func loadProducts(){
+        let fetchRequest: NSFetchRequest<Product> = Product.fetchRequest()
+        let sortDescritor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescritor]
         
         fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -76,11 +76,11 @@ class ProdutosTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProdutoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProductTableViewCell
 
-        guard let produto = fetchedResultController.fetchedObjects?[indexPath.row] else { return cell }
+        guard let product = fetchedResultController.fetchedObjects?[indexPath.row] else { return cell }
         
-        cell.prepare(witch: produto)
+        cell.prepare(witch: product)
         
         // Configure the cell...
 
@@ -101,9 +101,9 @@ class ProdutosTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            guard let produto = fetchedResultController.fetchedObjects?[indexPath.row] else {return}
+            guard let product = fetchedResultController.fetchedObjects?[indexPath.row] else {return}
             do {
-                context.delete(produto)
+                context.delete(product)
                 try context.save()
             } catch {
                 print(error.localizedDescription)
@@ -139,7 +139,7 @@ class ProdutosTableViewController: UITableViewController {
 
 }
 
-extension ProdutosTableViewController: NSFetchedResultsControllerDelegate{
+extension ProductsTableViewController: NSFetchedResultsControllerDelegate{
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
             case .delete:

@@ -8,10 +8,10 @@
 
 import UIKit
 
-class EstadoTableViewCell: UITableViewCell {
+class StateTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lbtitle: UILabel!
-    @IBOutlet weak var lbImposto: UILabel!
+    @IBOutlet weak var lbTax: UILabel!
     
     
     override func awakeFromNib() {
@@ -25,9 +25,9 @@ class EstadoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func prepare(witch estado: Estado) {
-        lbtitle.text = estado.nome ?? ""
-        lbImposto.text = String(estado.imposto)
+    func prepare(witch state: State) {
+        lbtitle.text = state.name ?? ""
+        lbTax.text = String(state.tax)
     }
 
 }

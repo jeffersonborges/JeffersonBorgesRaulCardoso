@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ProdutoTableViewCell: UITableViewCell {
-    @IBOutlet weak var imgProduto: UIImageView!
-    @IBOutlet weak var lbNome: UILabel!
-    @IBOutlet weak var lbValor: UILabel!
+class ProductTableViewCell: UITableViewCell {
+    @IBOutlet weak var productImg: UIImageView!
+    @IBOutlet weak var lbName: UILabel!
+    @IBOutlet weak var lbValue: UILabel!
     
     var conf = Calcular.shared
     
@@ -26,14 +26,14 @@ class ProdutoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func prepare(witch produto: Produto) {
-        lbNome.text = produto.nome ?? ""
-        lbValor.text = conf.getFormattedValue(of: produto.valor, withCurrency: "U$ ")
-        if let image = produto.image as? UIImage {
-            imgProduto.image = image
+    func prepare(witch product: Product) {
+        lbName.text = product.name ?? ""
+        lbValue.text = conf.getFormattedValue(of: product.value, withCurrency: "U$ ")
+        if let image = product.image as? UIImage {
+            productImg.image = image
         }
         else {
-            imgProduto.image = UIImage(named: "Unknown")
+            productImg.image = UIImage(named: "Unknown")
         }
     }
     

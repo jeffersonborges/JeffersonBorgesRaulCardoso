@@ -81,11 +81,11 @@ class Calcular {
         
     }
     
-    var products: [Produto] = []
+    var products: [Product] = []
     
     func loadProducts (with context: NSManagedObjectContext) {
-        let fetchResquest: NSFetchRequest<Produto> = Produto.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "nome", ascending: true)
+        let fetchResquest: NSFetchRequest<Product> = Product.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         
         fetchResquest.sortDescriptors = [sortDescriptor]
         

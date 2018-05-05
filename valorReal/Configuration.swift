@@ -13,9 +13,9 @@ enum UserDefaultsKeys: String {
     case imIOF = "iof"
 }
 
-class Configuracao {
+class Configuration {
     let defaults = UserDefaults.standard
-    static var shared: Configuracao = Configuracao()
+    static var shared: Configuration = Configuration()
     
     var calc = Calcular.shared
     

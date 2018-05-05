@@ -10,33 +10,32 @@ import Foundation
 import CoreData
 
 
-class EstadoManager {
-    static let shared = EstadoManager()
-    var estados: [Estado] = []
+class StateManager {
+    static let shared = StateManager()
+    var states: [State] = []
     
-    func loadEstados (with context: NSManagedObjectContext) {
-        let fetchResquest: NSFetchRequest<Estado> = Estado.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "nome", ascending: true)
+    func loadStates (with context: NSManagedObjectContext) {
+        let fetchResquest: NSFetchRequest<State> = State.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         
         fetchResquest.sortDescriptors = [sortDescriptor]
         
         do {
-            estados = try context.fetch(fetchResquest)
+            states = try context.fetch(fetchResquest)
         } catch {
             print(error.localizedDescription)
         }
         
     }
     
-    func deleteEstado(index: Int,with context: NSManagedObjectContext) {
-        let estado = self.estados[index]
+    func deleteState(index: Int,with context: NSManagedObjectContext) {
+        let states = self.states[index]
         
-        context.delete(estado)
+        context.delete(states)
         
         do {
-            
             try context.save()
-            estados.remove(at: index)
+            self.states.remove(at: index)
             
             
         } catch{
