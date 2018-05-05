@@ -17,6 +17,7 @@ class TotalPurchasesViewController: UIViewController {
     @IBOutlet weak var lbTotalUS: UILabel!
     @IBOutlet weak var lbTotalRS: UILabel!
     
+    
     var totalDollar: Double = 0
     var totalReal: Double = 0
     
