@@ -16,20 +16,15 @@ class ProductsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         tableView.estimatedRowHeight = 106
         tableView.rowHeight = UITableViewAutomaticDimension
         label.text = "Sua lista está vazia"
         label.textAlignment = .center
         label.textColor = .black
-        
         loadProducts()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -51,6 +46,7 @@ class ProductsTableViewController: UITableViewController {
         fetchedResultController.delegate = self
         do{
             try fetchedResultController.performFetch()
+            tableView.reloadData()
         }catch{
             print(error.localizedDescription)
         }

@@ -55,6 +55,7 @@ class StateViewController: UIViewController {
     
     func loadStates() {
         stateManager.loadStates(with: context)
+        stateManager.fetchedResultsControllerState.delegate = self
         tvStates.reloadData()
     }
     
