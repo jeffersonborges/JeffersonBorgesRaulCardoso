@@ -33,7 +33,7 @@ class TotalPurchasesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadProducts()
-        let dollar = UserDefaults.standard.string(forKey: "dollar")
+        let dollar = UserDefaults.standard.string(forKey: "dolar")
         let iof = UserDefaults.standard.string(forKey: "iof")
         
         var results = 0.0
@@ -71,7 +71,7 @@ class TotalPurchasesViewController: UIViewController {
     
     func loadProducts() {
         let fetchRequest: NSFetchRequest<Product> = Product.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             dataSource = try context.fetch(fetchRequest)

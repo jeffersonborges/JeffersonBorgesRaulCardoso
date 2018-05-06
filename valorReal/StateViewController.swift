@@ -33,7 +33,6 @@ class StateViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         loadStates()
     }
     
@@ -87,34 +86,30 @@ class StateViewController: UIViewController {
         }
         
         alert.addAction(UIAlertAction(title: btTitle, style: .default, handler: {(action) in
-            var errors: String = ""
-            let state = state ?? State(context: self.context)
             
-            if alert.textFields?[0].text != nil && alert.textFields?[0].text?.isEmpty == false {
-                state.name = alert.textFields?[0].text
-            }
-            else
-            {
-                errors.append("Preencha o Estado.")
+            var erros:String = ""
+            
+            if(alert.textFields?[0].text?.isEmpty == true){
+                erros.append("Nome do estado requerido\n")
             }
             
-            if alert.textFields?[1].text != nil && alert.textFields?[1].text?.isEmpty == false {
-                let vlTax: String = self.calc.verificaSinal((alert.textFields?[1].text)!)
-                //conforme consulta google existem estados com taxa 0
-                state.tax = self.calc.convertDouble(vlTax)
-            }
-            else
-            {
-                errors.append("\n Preencher Taxa.")
+            if(alert.textFields?[1].text?.isEmpty == true){
+                erros.append("Imposto do estado requerido\n")
             }
             
-            if errors.description != "" && errors.description.isEmpty == false {
-                self.showMsg(ptitle: "Inclusão não realizada.",pMsg: errors.description)
+            if erros.description != "" && erros.description.isEmpty == false {
+                self.showMsg(ptitle: "Validacao",pMsg: erros.description)
             }
             else
             {
                 do
                 {
+                    let state = state ?? State(context: self.context)
+                    let vlTax: String = self.calc.verificaSinal((alert.textFields?[1].text)!)
+                    
+                    state.tax = self.calc.convertDouble(vlTax)
+                    state.name = alert.textFields?[0].text
+                    
                     try self.context.save()
                     self.loadStates()
                 }
@@ -151,40 +146,90 @@ class StateViewController: UIViewController {
 
 }
 
-extension StateViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+// #MARK EXTENSION
+extension StateViewController: UIScrollViewDelegate
+{
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        tf_iof.resignFirstResponder()
+        tfCotation.resignFirstResponder()
+    }
+}
+
+extension StateViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        let count = stateManager.fetchedResultsControllerState.fetchedObjects?.count ?? 0
         
-        let count = stateManager.states.count
+        tableView.backgroundView = count == 0 ? label : nil
         
-        tvStates.backgroundView = count == 0 ? label : nil
         return count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tvStates.dequeueReusableCell(withIdentifier: "statecell", for: indexPath) as! StateTableViewCell
-        let state = stateManager.states[indexPath.row]
-        cell.prepare(witch: state)
-        return cell
-        
-    }
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tf_iof.resignFirstResponder()
         tfCotation.resignFirstResponder()
         tvStates.deselectRow(at: indexPath, animated: false)
         
-        let state = stateManager.states[indexPath.row]
+        let state = stateManager.fetchedResultsControllerState.fetchedObjects![indexPath.row]
         showAlert(with: state)
+        
+    }
+    
+}
+
+
+extension StateViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tvStates.dequeueReusableCell(withIdentifier: "statecell", for: indexPath) as! StateTableViewCell
+        let state = stateManager.fetchedResultsControllerState.fetchedObjects![indexPath.row]
+        cell.prepare(witch: state)
+        return cell
         
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             stateManager.deleteState(index: indexPath.row, with: context)
-            //estadoManager.estados.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.reloadData()
         }
     }
+    
+}
+
+extension StateViewController: NSFetchedResultsControllerDelegate{
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tvStates.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tvStates.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            tvStates.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .move:
+            break
+        case .update:
+            break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tvStates.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tvStates.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tvStates.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tvStates.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tvStates.endUpdates()
+    }
+    
 }

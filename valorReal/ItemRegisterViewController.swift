@@ -115,23 +115,53 @@ class ItemRegisterViewController: UIViewController {
     }
     
     @IBAction func addEditProduct(_ sender: UIButton) {
-        if product == nil{
-            product = Product(context: context)
+        
+        var erros:String = ""
+        
+        if(productName.text?.isEmpty == true){
+            erros.append("Nome do produto requerido!\n")
         }
-        product.name = productName.text
-        product.image = productImg.image
-        if let value = formatter.number(from: valueProduct.text!)?.doubleValue{
-            product.value = value
+        
+        if(valueProduct.text?.isEmpty == true){
+            erros.append("Valor do produto requerido\n")
         }
-        product.card = swCard.isOn
-        let state = fetchedResultController.fetchedObjects?.filter({$0.name == ufProduct.text}).first
-        product.state = state
-        do{
-            try context.save()
-        }catch{
-            print(error.localizedDescription)
+        
+        if(ufProduct.text?.isEmpty == true){
+            erros.append("Estado de compra requerido!")
         }
-        navigationController?.popViewController(animated: true)
+        
+        if(erros.description != "" && erros.description.isEmpty == false){
+            self.showAlert(ptitle: "Validacao", pMsg: erros)
+        }else{
+            
+            if product == nil{
+                product = Product(context: context)
+            }
+            product.name = productName.text
+            product.image = productImg.image
+            if let value = formatter.number(from: valueProduct.text!)?.doubleValue{
+                product.value = value
+            }
+            product.card = swCard.isOn
+            let state = fetchedResultController.fetchedObjects?.filter({$0.name == ufProduct.text}).first
+            product.state = state
+            
+            do{
+                try context.save()
+            }catch{
+                print(error.localizedDescription)
+            }
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func showAlert(ptitle: String, pMsg: String) {
+        
+        let alertController = UIAlertController(title: ptitle, message: pMsg, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func addImageProduct(_ sender: Any) {
