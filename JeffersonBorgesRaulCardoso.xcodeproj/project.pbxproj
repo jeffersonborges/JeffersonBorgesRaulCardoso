@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC074AE3208E9481003E0CA7 /* valorReal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = valorReal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC074AE3208E9481003E0CA7 /* JeffersonBorgesRaulCardoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JeffersonBorgesRaulCardoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC074AE6208E9481003E0CA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC074AE8208E9481003E0CA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AC074AEB208E9481003E0CA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			children = (
 				AC197AE2209E2077008C4DDA /* Settings.bundle */,
 				AC074AFC208EB2B9003E0CA7 /* baseLocal */,
-				AC074AE5208E9481003E0CA7 /* valorReal */,
+				AC074AE5208E9481003E0CA7 /* JeffersonBorgesRaulCardoso */,
 				AC074AE4208E9481003E0CA7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,12 +72,12 @@
 		AC074AE4208E9481003E0CA7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AC074AE3208E9481003E0CA7 /* valorReal.app */,
+				AC074AE3208E9481003E0CA7 /* JeffersonBorgesRaulCardoso.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AC074AE5208E9481003E0CA7 /* valorReal */ = {
+		AC074AE5208E9481003E0CA7 /* JeffersonBorgesRaulCardoso */ = {
 			isa = PBXGroup;
 			children = (
 				AC074AE6208E9481003E0CA7 /* AppDelegate.swift */,
@@ -97,7 +97,7 @@
 				EB705A43209BD95F00255631 /* Configuration.swift */,
 				EB705A45209BDA0300255631 /* Calcular.swift */,
 			);
-			path = valorReal;
+			path = JeffersonBorgesRaulCardoso;
 			sourceTree = "<group>";
 		};
 		AC074AFC208EB2B9003E0CA7 /* baseLocal */ = {
@@ -111,9 +111,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AC074AE2208E9481003E0CA7 /* valorReal */ = {
+		AC074AE2208E9481003E0CA7 /* JeffersonBorgesRaulCardoso */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AC074AF5208E9481003E0CA7 /* Build configuration list for PBXNativeTarget "valorReal" */;
+			buildConfigurationList = AC074AF5208E9481003E0CA7 /* Build configuration list for PBXNativeTarget "JeffersonBorgesRaulCardoso" */;
 			buildPhases = (
 				AC074ADF208E9481003E0CA7 /* Sources */,
 				AC074AE0208E9481003E0CA7 /* Frameworks */,
@@ -123,9 +123,9 @@
 			);
 			dependencies = (
 			);
-			name = valorReal;
+			name = JeffersonBorgesRaulCardoso;
 			productName = valorReal;
-			productReference = AC074AE3208E9481003E0CA7 /* valorReal.app */;
+			productReference = AC074AE3208E9481003E0CA7 /* JeffersonBorgesRaulCardoso.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -144,7 +144,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AC074ADE208E9481003E0CA7 /* Build configuration list for PBXProject "valorReal" */;
+			buildConfigurationList = AC074ADE208E9481003E0CA7 /* Build configuration list for PBXProject "JeffersonBorgesRaulCardoso" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -157,7 +157,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AC074AE2208E9481003E0CA7 /* valorReal */,
+				AC074AE2208E9481003E0CA7 /* JeffersonBorgesRaulCardoso */,
 			);
 		};
 /* End PBXProject section */
@@ -335,9 +335,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = valorReal/Info.plist;
+				INFOPLIST_FILE = JeffersonBorgesRaulCardoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fiap.valorReal;
+				PRODUCT_BUNDLE_IDENTIFIER = fiap.JeffersonBorgesRaulCardoso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -349,9 +349,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = valorReal/Info.plist;
+				INFOPLIST_FILE = JeffersonBorgesRaulCardoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fiap.valorReal;
+				PRODUCT_BUNDLE_IDENTIFIER = fiap.JeffersonBorgesRaulCardoso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -361,7 +361,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AC074ADE208E9481003E0CA7 /* Build configuration list for PBXProject "valorReal" */ = {
+		AC074ADE208E9481003E0CA7 /* Build configuration list for PBXProject "JeffersonBorgesRaulCardoso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC074AF3208E9481003E0CA7 /* Debug */,
@@ -370,7 +370,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AC074AF5208E9481003E0CA7 /* Build configuration list for PBXNativeTarget "valorReal" */ = {
+		AC074AF5208E9481003E0CA7 /* Build configuration list for PBXNativeTarget "JeffersonBorgesRaulCardoso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC074AF6208E9481003E0CA7 /* Debug */,
