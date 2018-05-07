@@ -55,7 +55,6 @@ class StateViewController: UIViewController {
     
     func loadStates() {
         stateManager.loadStates(with: context)
-        stateManager.fetchedResultsControllerState.delegate = self
         tvStates.reloadData()
     }
     
@@ -147,90 +146,41 @@ class StateViewController: UIViewController {
 
 }
 
-// #MARK EXTENSION
-extension StateViewController: UIScrollViewDelegate
-{
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        tf_iof.resignFirstResponder()
-        tfCotation.resignFirstResponder()
-    }
-}
-
-extension StateViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        let count = stateManager.fetchedResultsControllerState.fetchedObjects?.count ?? 0
+extension StateViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        tableView.backgroundView = count == 0 ? label : nil
+        let count = stateManager.states.count
         
+        tvStates.backgroundView = count == 0 ? label : nil
         return count
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tvStates.dequeueReusableCell(withIdentifier: "statecell", for: indexPath) as! StateTableViewCell
+        let state = stateManager.states[indexPath.row]
+        cell.prepare(witch: state)
+        return cell
+        
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tf_iof.resignFirstResponder()
         tfCotation.resignFirstResponder()
         tvStates.deselectRow(at: indexPath, animated: false)
         
-        let state = stateManager.fetchedResultsControllerState.fetchedObjects![indexPath.row]
+        let state = stateManager.states[indexPath.row]
         showAlert(with: state)
-        
-    }
-    
-}
-
-
-extension StateViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tvStates.dequeueReusableCell(withIdentifier: "statecell", for: indexPath) as! StateTableViewCell
-        let state = stateManager.fetchedResultsControllerState.fetchedObjects![indexPath.row]
-        cell.prepare(witch: state)
-        return cell
         
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             stateManager.deleteState(index: indexPath.row, with: context)
-            
-            tableView.reloadData()
+            //estadoManager.estados.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-    
-}
-
-extension StateViewController: NSFetchedResultsControllerDelegate{
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tvStates.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        switch type {
-        case .insert:
-            tvStates.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-        case .delete:
-            tvStates.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-        case .move:
-            break
-        case .update:
-            break
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tvStates.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tvStates.deleteRows(at: [indexPath!], with: .fade)
-        case .update:
-            tvStates.reloadRows(at: [indexPath!], with: .fade)
-        case .move:
-            tvStates.moveRow(at: indexPath!, to: newIndexPath!)
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tvStates.endUpdates()
     }
     
 }

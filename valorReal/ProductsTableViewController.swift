@@ -13,6 +13,7 @@ class ProductsTableViewController: UITableViewController {
 
     var label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 22))
     var fetchedResultController: NSFetchedResultsController<Product>!
+    var products: [Product] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +46,8 @@ class ProductsTableViewController: UITableViewController {
         
         fetchedResultController.delegate = self
         do{
+            self.products = try context.fetch(fetchRequest)
             try fetchedResultController.performFetch()
-            tableView.reloadData()
         }catch{
             print(error.localizedDescription)
         }
@@ -83,16 +84,6 @@ class ProductsTableViewController: UITableViewController {
         return cell
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -106,44 +97,26 @@ class ProductsTableViewController: UITableViewController {
             }
         }
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension ProductsTableViewController: NSFetchedResultsControllerDelegate{
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject:
+        Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
         switch type {
-            case .delete:
-                if let indexPath = indexPath {
+        case .delete:
+            if let indexPath = indexPath {
+                do{
+                    try context.save()
+                    products.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
+                }catch{
+                    print(error.localizedDescription)
                 }
-            default:
-                tableView.reloadData()
+            }
+            break
+        default:
+            tableView.reloadData()
         }
     }
 }
