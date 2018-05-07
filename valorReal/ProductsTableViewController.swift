@@ -48,6 +48,7 @@ class ProductsTableViewController: UITableViewController {
         do{
             self.products = try context.fetch(fetchRequest)
             try fetchedResultController.performFetch()
+            tableView.reloadData()
         }catch{
             print(error.localizedDescription)
         }
