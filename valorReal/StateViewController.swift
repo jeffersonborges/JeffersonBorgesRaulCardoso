@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import CoreData
 
 class StateViewController: UIViewController {
@@ -56,6 +57,20 @@ class StateViewController: UIViewController {
     func loadStates() {
         stateManager.loadStates(with: context)
         tvStates.reloadData()
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //aqui grava
+        if tf_iof.text?.isEmpty == false {
+            config.txIOF = calc.verificaSinal(tf_iof.text!)
+            
+        }
+        
+        if tfCotation.text?.isEmpty == false {
+            config.cotDolar = calc.verificaSinal(tfCotation.text!)
+        }
+        
+        tf_iof.resignFirstResponder()
+        tfCotation.resignFirstResponder()
     }
     
     @IBAction func btAddEditState(_ sender: Any) {
@@ -146,6 +161,19 @@ class StateViewController: UIViewController {
 
 }
 
+extension StateViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tf_iof.resignFirstResponder()
+        tfCotation.resignFirstResponder()
+        tvStates.deselectRow(at: indexPath, animated: false)
+        
+        let state = stateManager.states[indexPath.row]
+        showAlert(with: state)
+        
+    }
+    
+}
+
 extension StateViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -161,17 +189,6 @@ extension StateViewController: UITableViewDataSource {
         let state = stateManager.states[indexPath.row]
         cell.prepare(witch: state)
         return cell
-        
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tf_iof.resignFirstResponder()
-        tfCotation.resignFirstResponder()
-        tvStates.deselectRow(at: indexPath, animated: false)
-        
-        let state = stateManager.states[indexPath.row]
-        showAlert(with: state)
         
     }
     
