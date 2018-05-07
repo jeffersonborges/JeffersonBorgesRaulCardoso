@@ -1,6 +1,6 @@
 //
 //  EstadoTableViewCell.swift
-//  valorReal
+//  ComprarUSA
 //
 //  Created by user139409 on 5/3/18.
 //  Copyright © 2018 Usuário Convidado. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  valorReal
+//  ComprarUSA
 //
 //  Created by Usuário Convidado on 23/04/18.
 //  Copyright © 2018 Usuário Convidado. All rights reserved.

@@ -1,9 +1,9 @@
 //
-//  UIViewController+CoreData.swift
-//  MoviesLib
+//  UIViewController.swift
+//  ComprarUSA
 //
-//  Created by Eric Brito.
-//  Copyright © 2017 EricBrito. All rights reserved.
+//  Created by user139409 on 5/2/18.
+//  Copyright © 2018 Usuário Convidado. All rights reserved.
 //
 
 import CoreData
